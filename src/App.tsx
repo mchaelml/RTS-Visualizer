@@ -1,9 +1,9 @@
-import React from "react";
-import Main from "../src/Components/Layout/Main";
-import logo from "./logo.svg";
+import React, { ReactElement } from "react";
+
+import Main from "./Components/Layout/Main";
 import "./App.css";
 
-function App() {
+function App(): ReactElement {
   return <Main />;
 }
 
