@@ -86,7 +86,7 @@ const Main = (): ReactElement => {
       />
     ),
   );
-
+  // TODO rework this for better performance + cleaner code
   const animationStart = (array: AlgoProps): void => {
     const { animations } = array;
     for (let y = 0; y < animations.length; y++) {
@@ -94,20 +94,26 @@ const Main = (): ReactElement => {
         const F = docs[animations[i].f];
         const S = docs[animations[i].s];
         setTimeout(() => {
-          F.style.background = "red";
-          S.style.background = "red";
+          // F.style.backgroundColor = "green";
+          // S.style.backgroundColor = "green";
           F.style.height = `${animations[i].fVal}%`;
           S.style.height = `${animations[i].sVal}%`;
         }, ANIMATION_SPEED * i);
         setTimeout(() => {
           const el = animations[i];
-          docs[el.f].style.backgroundColor = `linear-gradient( red ${
-            (el.f / animations.length) * 1000
-          }%, yellow ${100 - parseFloat(F.style.height)}%)`;
-          docs[el.s].style.backgroundColor = `linear-gradient( red ${
-            (el.s / animations.length) * 1000
-          }%, yellow ${100 - parseFloat(S.style.height)}%)`;
-        }, (ANIMATION_SPEED + 1) * i);
+          const fPercent = (el.f / animations.length) * 1000;
+          const sPercent = (el.f / animations.length) * 1000;
+          docs[
+            el.f
+          ].style.background = `linear-gradient( red ${fPercent}%, yellow ${
+            100 - fPercent
+          }%)`;
+          docs[
+            el.s
+          ].style.background = `linear-gradient( red ${sPercent}%, yellow ${
+            100 - sPercent
+          }%)`;
+        }, ANIMATION_SPEED * i + ANIMATION_SPEED);
       })(y);
     }
   };
@@ -124,7 +130,6 @@ const Main = (): ReactElement => {
 
   const startSelectionSortAnimations = (): void => {
     const sorted = Algorithms.selectionSort([...bubbleArray]);
-    console.log(sorted);
     animationStart(sorted);
   };
 
